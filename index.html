@@ -1,97 +1,60 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset='utf-8' />
-    <title>Display a map</title>
-    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
-    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.49.0/mapbox-gl.js'></script>
-    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.49.0/mapbox-gl.css' rel='stylesheet' />
-    <style>
-        body { margin:0; padding:0; }
-        #map { position:absolute; top:0; bottom:0; width:100%; }
-    </style>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {
+  margin: 100px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+.topnav {
+  overflow: hidden;
+  background-color: #333;
+}
+.topnav a {
+  float: left;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+.topnav a.active {
+  background-color: #AED6F1  ;
+  color: white;
+}
+.h1 {align = center;}
+</style>
 </head>
 <body>
 
-<div id='map'></div>
-<script>
-mapboxgl.accessToken = 'pk.eyJ1IjoiZWFzdGVybndpbmRzIiwiYSI6ImNqbHQ1bHpyODA0cWQza29naWN6aWx5dnUifQ.sowFJQvWdmcsz4U2dzfqAw';
-var map = new mapboxgl.Map({
-    container: 'map', // container id
-    style: 'mapbox://styles/mapbox/streets-v9', // stylesheet location
-    center: [151.004105, -33.813002], // starting position [lng, lat]
-    zoom: 9, // starting zoom
-    pitch: 45, 
-    bearing: -17.6
+<div class="topnav">
+  <a class="active" href="index.html">Introduction</a>
+  <a href="menu.html">Analysis</a>
+  <a href="References.html">References</a>
+</div>
 
-});
+  <h1>Architectural Intervention</h1>
+  <br>
+  <a align="center">
+  <h2>Car Tower Project</h2>
+  <h3>Background</h3> 
+  <p>In relation to Assignment 2 where the amount of households with 2 cars were explored, this intervention aims to solve one of the problems which may arise due to the significant expansion.<br><br>
+In the region of Parramatta in Western Sydney, a development strategy by the NSW government aims to transform the city into the central hub of Sydney. From the increased development, the city over the years have seen large expansions economically and socially bringing more employment and households to the area, hence from the previous visualisation of the database provided by ABS, it can be inferred that the  increased amount of households with 2 cars, would potentially bring issues with traffic management and parking availability. <br><br>
 
-map.on('load', function() {
-    // Insert the layer beneath any symbol layer.
-    var layers = map.getStyle().layers;
+</p>
+<h3>Aim</h3>
+<p>The issue that the intervention would attempt to solve is traffic management and parking availability by bringing more parking zones to the area to for vehicle users and to encourage them to park into these zones for work and or/other activities to reduce the number of vehicles parked along tight and busy roads.<br><br>
 
-    var labelLayerId;
-    for (var i = 0; i < layers.length; i++) {
-        if (layers[i].type === 'symbol' && layers[i].layout['text-field']) {
-            labelLayerId = layers[i].id;
-            break;
-        }
-    }
- map.addLayer({
-        "id": "data",
-        "type": "fill-extrusion",
-        "source": {
-            'type': 'geojson',
-            'data': './Experiment.geojson'
-        },
-        'layout': {
-            'visibility': 'visible'
-            },
-        'paint': {
-                'fill-extrusion-color' : {
-                    'property': 'colour',
-                    'type': 'identity'
-                },
-                'fill-extrusion-height' : {
-                    'type': 'identity',
-                    'property': 'height'
-                },
-                'fill-extrusion-base' : {
-                    'type': 'identity',
-                    'property': 'base_height'
-                },
-                 'fill-extrusion-opacity': 1
-            }
+By placing the structure near commerical zones and public transport(Trains) in Parramatta, which are reachable within appropriate walking distance, it allows everyone to easily travel for recreation, work and transferring between modes of transportation. Therefore reducing the need for users to constantly find and park in presently congested areas and increase efficiency. 
+</p>
 
-    });
-    map.addLayer({
-        'id': '3d-buildings',
-        'source': 'composite',
-        'source-layer': 'building',
-        'filter': ['==', 'extrude', 'true'],
-        'type': 'fill-extrusion',
-        'minzoom': 15,
-        'paint': {
-            'fill-extrusion-color': '#aaa',
+</a>
 
-            // use an 'interpolate' expression to add a smooth transition effect to the
-            // buildings as the user zooms in
-            'fill-extrusion-height': [
-                "interpolate", ["linear"], ["zoom"],
-                15, 0,
-                15.05, ["get", "height"]
-            ],
-            'fill-extrusion-base': [
-                "interpolate", ["linear"], ["zoom"],
-                15, 0,
-                15.05, ["get", "min_height"]
-            ],
-            'fill-extrusion-opacity': .6
-        }
-    }, labelLayerId);
-});
-
-</script>
 
 </body>
 </html>
